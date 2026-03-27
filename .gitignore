@@ -7,7 +7,7 @@
 *.dll
 *.so
 *.dylib
-playtics
+/playtics
 
 # Test binary, built with `go test -c`
 *.test

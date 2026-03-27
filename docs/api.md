@@ -12,6 +12,26 @@
 
 ## Request & Response
 
+### Error Response
+
+All endpoints return the following format on error:
+
+```json
+{
+    "success": "NG",
+    "message": "error description"
+}
+```
+
+| Status Code | Description |
+|-------------|-------------|
+| 400 | Bad Request - Validation error or invalid input |
+| 404 | Not Found - Resource does not exist |
+| 409 | Conflict - Resource already exists (e.g., duplicate email) |
+| 500 | Internal Server Error |
+
+---
+
 ### POST /players
 
 **Request**
@@ -106,6 +126,14 @@
 ```
 
 ### GET /leaderboard
+
+**Query Parameters**
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| period | string | No | `all` (default), `daily`, `weekly`, `monthly` |
+| limit | integer | No | Max rows to return (default: 100) |
+| offset | integer | No | Pagination offset (default: 0) |
 
 **Response**
 ```json
