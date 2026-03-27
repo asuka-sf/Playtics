@@ -9,6 +9,7 @@ Playtics is a game stats API that tracks player scores, match results, and leade
 - **Architecture**: Clean Architecture
 - **Database**: PostgreSQL
 - **Schema Management**: Atlas (ariga.io)
+- **Code Generation**: sqlc
 - **Infrastructure**: AWS
 - **IaC**: Terraform
 
@@ -32,3 +33,26 @@ This project follows Clean Architecture principles, separating concerns into dis
 
 - Match history recording
 - Win rate, K/D ratio, average score aggregation
+
+## Development
+
+### Prerequisites
+
+- Go
+- Docker
+- [Atlas](https://atlasgo.io/)
+- [sqlc](https://sqlc.dev/)
+- [golangci-lint](https://golangci-lint.run/)
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `make db-up` | Start PostgreSQL (Docker) |
+| `make db-down` | Stop PostgreSQL |
+| `make migrate-diff name=xxx` | Generate migration diff with Atlas |
+| `make migrate-apply` | Apply migrations |
+| `make sqlc` | Generate Go code from SQL queries (sqlc) |
+| `make run` | Run the application |
+| `make lint` | Run linter |
+| `make test` | Run tests |
