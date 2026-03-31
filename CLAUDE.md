@@ -65,3 +65,10 @@ See `docs/api.md` for full request/response documentation.
 - Always check that dependency directions follow Clean Architecture
 - Domain layer must not depend on infrastructure layer
 - All repository interfaces must be defined in domain layer
+
+## Test plan
+- [ ] Base branch is `develop` (not `main`)
+- [ ] `go build` passes
+- [ ] `go test` passes
+- [ ] No hardcoded credentials or secrets
+- [ ] API documentation updated (`docs/api.md`)

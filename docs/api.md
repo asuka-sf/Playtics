@@ -47,13 +47,14 @@ All endpoints return the following format on error:
 ```json
 {
     "success": "OK",
-    "message": "Created user successfully",
-    "player": {
+    "message": "Created player successfully",
+    "data": {
         "id": "uuid",
         "name": "Alice",
         "email": "alice@example.com",
         "image_url": "image.jpeg",
-        "created_at": "2026-03-25T10:00:00Z"
+        "created_at": "2026-03-25T10:00:00Z",
+        "updated_at": "2026-03-25T10:00:00Z"
     }
 }
 ```
@@ -72,7 +73,7 @@ All endpoints return the following format on error:
 {
     "success": "OK",
     "message": "Created match successfully",
-    "match": {
+    "data": {
         "id": "uuid",
         "duration_seconds": 300,
         "created_at": "2026-03-25T10:00:00Z"
@@ -96,13 +97,14 @@ All endpoints return the following format on error:
 {
     "success": "OK",
     "message": "Created result successfully",
-    "result": {
+    "data": {
         "player_id": "uuid",
         "match_id": "uuid",
         "kill_count": 10,
         "death_count": 5,
         "score": 100,
-        "created_at": "2026-03-25T10:00:00Z"
+        "created_at": "2026-03-25T10:00:00Z",
+        "updated_at": "2026-03-25T10:00:00Z"
     }
 }
 ```
@@ -113,8 +115,8 @@ All endpoints return the following format on error:
 ```json
 {
     "success": "OK",
-    "message": "Fetched user successfully",
-    "player": {
+    "message": "Fetched player successfully",
+    "data": {
         "id": "uuid",
         "name": "Alice",
         "email": "alice@example.com",
@@ -140,7 +142,7 @@ All endpoints return the following format on error:
 {
     "success": "OK",
     "message": "Fetched leaderboard successfully",
-    "leaderboard": [
+    "data": [
         {
             "rank": 1,
             "player_id": "uuid",
