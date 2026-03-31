@@ -2,6 +2,7 @@ package handler
 
 import (
 	"errors"
+	"log"
 	"net/http"
 
 	"playtics/internal/domain"
@@ -43,7 +44,8 @@ func (h *playerHandler) Create(c *gin.Context) {
 			c.JSON(http.StatusConflict, gin.H{"error": err.Error()})
 			return
 		}
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "internal server error"})
+		log.Printf("failed to create player: %v", err)
 		return
 	}
 
