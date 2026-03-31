@@ -74,7 +74,7 @@ func (h *playerHandler) Create(c *gin.Context) {
 
 // map JSON request to createPlayerRequest structure
 func bindJSON(c *gin.Context, req *createPlayerRequest) bool {
-	if err := c.ShouldBindJSON(&req); err != nil {
+	if err := c.ShouldBindJSON(req); err != nil {
 		var ve validator.ValidationErrors
 		// check if the error is validator.ValidationErrors and get the error information
 		if errors.As(err, &ve) {
