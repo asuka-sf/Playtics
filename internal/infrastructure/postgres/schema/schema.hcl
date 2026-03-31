@@ -19,10 +19,12 @@ table "players" {
     column "created_at" {
         null = false
         type = timestamptz
+        default = sql("NOW()")
     }
     column "updated_at" {
         null = false
         type = timestamptz
+        default = sql("NOW()")
     }
     primary_key {
         columns = [column.id]
@@ -46,6 +48,7 @@ table "matches" {
     column "created_at" {
         null = false
         type = timestamptz
+        default = sql("NOW()")
     }
     primary_key {
         columns = [column.id]
@@ -77,10 +80,12 @@ table "match_results" {
     column "created_at" {
         null = false
         type = timestamptz
+        default = sql("NOW()")
     }
     column "updated_at" {
         null = false
         type = timestamptz
+        default = sql("NOW()")
     }
     primary_key {
         columns = [column.player_id, column.match_id]

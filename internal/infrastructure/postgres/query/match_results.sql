@@ -1,6 +1,6 @@
 -- name: CreateMatchResult :one
-INSERT INTO playtics.match_results (player_id, match_id, kill_count, death_count, score, created_at, updated_at)
-VALUES ($1, $2, $3, $4, $5, $6, $7)
+INSERT INTO playtics.match_results (player_id, match_id, kill_count, death_count, score)
+VALUES ($1, $2, $3, $4, $5)
 RETURNING *;
 
 -- name: GetLeaderboard :many

@@ -12,19 +12,18 @@ import (
 )
 
 const createMatch = `-- name: CreateMatch :one
-INSERT INTO playtics.matches (id, duration_seconds, created_at)
-VALUES ($1, $2, $3)
+INSERT INTO playtics.matches (id, duration_seconds)
+VALUES ($1, $2)
 RETURNING id, duration_seconds, created_at
 `
 
 type CreateMatchParams struct {
 	ID              pgtype.UUID
 	DurationSeconds int32
-	CreatedAt       pgtype.Timestamptz
 }
 
 func (q *Queries) CreateMatch(ctx context.Context, arg CreateMatchParams) (PlayticsMatch, error) {
-	row := q.db.QueryRow(ctx, createMatch, arg.ID, arg.DurationSeconds, arg.CreatedAt)
+	row := q.db.QueryRow(ctx, createMatch, arg.ID, arg.DurationSeconds)
 	var i PlayticsMatch
 	err := row.Scan(&i.ID, &i.DurationSeconds, &i.CreatedAt)
 	return i, err

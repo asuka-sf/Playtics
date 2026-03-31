@@ -12,18 +12,16 @@ import (
 )
 
 const createPlayer = `-- name: CreatePlayer :one
-INSERT INTO playtics.players (id, name, email, image_url, created_at, updated_at)
-VALUES ($1, $2, $3, $4, $5, $6)
+INSERT INTO playtics.players (id, name, email, image_url)
+VALUES ($1, $2, $3, $4)
 RETURNING id, name, email, image_url, created_at, updated_at
 `
 
 type CreatePlayerParams struct {
-	ID        pgtype.UUID
-	Name      string
-	Email     string
-	ImageUrl  pgtype.Text
-	CreatedAt pgtype.Timestamptz
-	UpdatedAt pgtype.Timestamptz
+	ID       pgtype.UUID
+	Name     string
+	Email    string
+	ImageUrl pgtype.Text
 }
 
 func (q *Queries) CreatePlayer(ctx context.Context, arg CreatePlayerParams) (PlayticsPlayer, error) {
@@ -32,8 +30,6 @@ func (q *Queries) CreatePlayer(ctx context.Context, arg CreatePlayerParams) (Pla
 		arg.Name,
 		arg.Email,
 		arg.ImageUrl,
-		arg.CreatedAt,
-		arg.UpdatedAt,
 	)
 	var i PlayticsPlayer
 	err := row.Scan(
