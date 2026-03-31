@@ -5,5 +5,5 @@ import (
 )
 
 func (h *Handler) RegisterRoutes(r *gin.Engine) {
-	r.POST("/players", h.PlayerHandler.Create)
+	r.POST("/players", h.playerHandler.Create)
 }

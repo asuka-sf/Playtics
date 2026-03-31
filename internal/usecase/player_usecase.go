@@ -2,7 +2,6 @@ package usecase
 
 import (
 	"context"
-	"fmt"
 
 	"playtics/internal/domain"
 	"playtics/internal/domain/repository"
@@ -32,8 +31,9 @@ func (u *playerUsecase) Create(ctx context.Context, name, email, imageURL string
 		Email:    email,
 		ImageURL: imageURL,
 	})
+
 	if err != nil {
-		return nil, fmt.Errorf("failed to create player: %w", err)
+		return nil, err
 	}
 
 	return player, nil

@@ -1,11 +1,11 @@
 package handler
 
 type Handler struct {
-	PlayerHandler *playerHandler
+	playerHandler *playerHandler
 }
 
 func NewHandler(playerHandler *playerHandler) *Handler {
 	return &Handler{
-		PlayerHandler: playerHandler,
+		playerHandler: playerHandler,
 	}
 }

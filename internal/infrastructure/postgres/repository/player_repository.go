@@ -2,12 +2,13 @@ package repository
 
 import (
 	"context"
+	"errors"
 	"fmt"
-	"strings"
 
 	"playtics/internal/domain"
 	"playtics/internal/infrastructure/postgres/gen"
 
+	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
@@ -31,7 +32,8 @@ func (r *playerRepository) Create(ctx context.Context, player *domain.Player) (*
 	})
 
 	if err != nil {
-		if strings.Contains(err.Error(), "23505") {
+		var pgErr *pgconn.PgError
+		if errors.As(err, &pgErr) && pgErr.Code == "23505" {
 			return nil, domain.ErrDuplicateEmail
 		}
 		return nil, fmt.Errorf("failed to create player: %w", err)

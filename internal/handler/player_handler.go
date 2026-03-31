@@ -15,8 +15,8 @@ type playerHandler struct {
 }
 
 type createPlayerRequest struct {
-	Name     string `json:"name"`
-	Email    string `json:"email"`
+	Name     string `json:"name" binding:"required"`
+	Email    string `json:"email" binding:"required"`
 	ImageURL string `json:"image_url"`
 }
 
@@ -31,7 +31,7 @@ func (h *playerHandler) Create(c *gin.Context) {
 
 	// get values from request
 	var req createPlayerRequest
-	if err := c.BindJSON(&req); err != nil {
+	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

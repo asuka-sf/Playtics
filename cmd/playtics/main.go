@@ -24,7 +24,7 @@ func main() {
 	defer dbpool.Close()
 
 	// Ping
-	if err := dbpool.Ping(context.Background()); err != nil {
+	if err = dbpool.Ping(context.Background()); err != nil {
 		log.Fatalf("failed to ping database: %v", err)
 	}
 
@@ -37,6 +37,7 @@ func main() {
 	reg.AppHandler.RegisterRoutes(r)
 
 	// Start
-	r.Run()
-
+	if err = r.Run(); err != nil {
+		log.Fatalf("failed to start server: %v", err)
+	}
 }

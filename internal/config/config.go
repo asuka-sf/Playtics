@@ -2,6 +2,8 @@ package config
 
 import (
 	"fmt"
+	"log"
+	"net/url"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -27,6 +29,13 @@ func Load() *Config {
 		DBName:     getEnv("DB_NAME", ""),
 	}
 
+	if cfg.DBUser == "" {
+		log.Fatal("DB_USER environment variable is required")
+	}
+	if cfg.DBName == "" {
+		log.Fatal("DB_NAME environment variable is required")
+	}
+
 	return cfg
 }
 
@@ -40,6 +49,12 @@ func getEnv(key string, fallback string) string {
 
 // DatabaseURL assembles a connection string from individual config fields
 func (c *Config) DatabaseURL() string {
-	return fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
-		c.DBUser, c.DBPassword, c.DBHost, c.DBPort, c.DBName)
+	u := &url.URL{
+		Scheme:   "postgres",
+		User:     url.UserPassword(c.DBUser, c.DBPassword),
+		Host:     fmt.Sprintf("%s:%s", c.DBHost, c.DBPort),
+		Path:     c.DBName,
+		RawQuery: "sslmode=disable",
+	}
+	return u.String()
 }
