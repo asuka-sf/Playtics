@@ -88,8 +88,12 @@ func bindJSON(c *gin.Context, req *createPlayerRequest) bool {
 					msgs = append(msgs, jsonTag+" is "+fieldErr.Tag())
 				}
 			}
-			// return validation error message (e.g. "name is required, email is required")
-			errorResponse(c, http.StatusBadRequest, strings.Join(msgs, ", "))
+			// set a message (e.g. "name is required, email is required")
+			message := strings.Join(msgs, ", ")
+			if message == "" {
+				message = "validation failed"
+			}
+			errorResponse(c, http.StatusBadRequest, message)
 			return false
 		}
 		errorResponse(c, http.StatusBadRequest, "invalid request body")
