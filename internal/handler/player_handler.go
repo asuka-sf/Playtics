@@ -6,13 +6,24 @@ import (
 	"net/http"
 	"reflect"
 	"strings"
+	"time"
 
 	"playtics/internal/domain"
 	"playtics/internal/usecase"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+	"github.com/google/uuid"
 )
+
+type playerResponse struct {
+	ID        uuid.UUID `json:"id"`
+	Name      string    `json:"name"`
+	Email     string    `json:"email"`
+	ImageURL  string    `json:"image_url"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
 
 type playerHandler struct {
 	us usecase.PlayerUsecase
@@ -51,7 +62,14 @@ func (h *playerHandler) Create(c *gin.Context) {
 		return
 	}
 
-	successResponse(c, http.StatusCreated, "Created player successfully", result)
+	successResponse(c, http.StatusCreated, "Created player successfully", playerResponse{
+		ID:        result.ID,
+		Name:      result.Name,
+		Email:     result.Email,
+		ImageURL:  result.ImageURL,
+		CreatedAt: result.CreatedAt,
+		UpdatedAt: result.UpdatedAt,
+	})
 }
 
 // map JSON request to createPlayerRequest structure
