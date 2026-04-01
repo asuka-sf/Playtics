@@ -11,6 +11,7 @@ import (
 
 type PlayerUsecase interface {
 	Create(ctx context.Context, name, email, imageURL string) (*domain.Player, error)
+	GetByID(ctx context.Context, id uuid.UUID) (*domain.Player, error)
 }
 
 type playerUsecase struct {
@@ -31,6 +32,17 @@ func (u *playerUsecase) Create(ctx context.Context, name, email, imageURL string
 		Email:    email,
 		ImageURL: imageURL,
 	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return player, nil
+}
+
+// get player
+func (u *playerUsecase) GetByID(ctx context.Context, id uuid.UUID) (*domain.Player, error) {
+	player, err := u.repo.FindByID(ctx, id)
 
 	if err != nil {
 		return nil, err

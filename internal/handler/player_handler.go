@@ -72,6 +72,39 @@ func (h *playerHandler) Create(c *gin.Context) {
 	})
 }
 
+func (h *playerHandler) GetByID(c *gin.Context) {
+	ctx := c.Request.Context()
+
+	idStr := c.Param("id")
+	// parse string to uuid.UUID
+	id, err := uuid.Parse(idStr)
+
+	if err != nil {
+		errorResponse(c, http.StatusBadRequest, "invalid player id")
+		return
+	}
+
+	result, err := h.us.GetByID(ctx, id)
+	if err != nil {
+		// if can't find the player
+		if errors.Is(err, domain.ErrNotFound) {
+			errorResponse(c, http.StatusNotFound, "player not found")
+			return
+		}
+		errorResponse(c, http.StatusInternalServerError, "internal server error")
+		return
+	}
+
+	successResponse(c, http.StatusOK, "Fetched player successfully", playerResponse{
+		ID:        result.ID,
+		Name:      result.Name,
+		Email:     result.Email,
+		ImageURL:  result.ImageURL,
+		CreatedAt: result.CreatedAt,
+		UpdatedAt: result.UpdatedAt,
+	})
+}
+
 // map JSON request to createPlayerRequest structure
 func bindJSON(c *gin.Context, req *createPlayerRequest) bool {
 	if err := c.ShouldBindJSON(req); err != nil {
