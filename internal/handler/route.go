@@ -6,4 +6,5 @@ import (
 
 func (h *Handler) RegisterRoutes(r *gin.Engine) {
 	r.POST("/players", h.playerHandler.Create)
+	r.GET("/players/:id", h.playerHandler.GetByID)
 }

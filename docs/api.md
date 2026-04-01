@@ -59,6 +59,12 @@ All endpoints return the following format on error:
 }
 ```
 
+**Error Responses**
+| Status Code | Message |
+|-------------|---------|
+| 400 | name is required, email is required |
+| 409 | email already exists |
+
 ### POST /matches
 
 **Request**
@@ -110,6 +116,12 @@ All endpoints return the following format on error:
 ```
 
 ### GET /players/{id}
+
+**Error Responses**
+| Status Code | Message |
+|-------------|---------|
+| 400 | invalid player id |
+| 404 | player not found |
 
 **Response**
 ```json
