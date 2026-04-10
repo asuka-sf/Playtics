@@ -27,6 +27,10 @@ func bindJSON[T any](c *gin.Context, req *T) bool {
 					if idx := strings.Index(jsonTag, ","); idx != -1 {
 						jsonTag = jsonTag[:idx]
 					}
+					// fallback to struct field name if json tag is empty or "-"
+					if jsonTag == "" || jsonTag == "-" {
+						jsonTag = fieldErr.Field()
+					}
 					msgs = append(msgs, jsonTag+" is "+fieldErr.Tag())
 				}
 			}
