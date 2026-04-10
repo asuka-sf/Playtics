@@ -23,6 +23,10 @@ func bindJSON[T any](c *gin.Context, req *T) bool {
 				// check if the field exists in the struct and get the json tag name
 				if structField, ok := structType.FieldByName(fieldErr.Field()); ok {
 					jsonTag := structField.Tag.Get("json")
+					// remove option suffix from json tag (e.g. "name,omitempty" -> "name")
+					if idx := strings.Index(jsonTag, ","); idx != -1 {
+						jsonTag = jsonTag[:idx]
+					}
 					msgs = append(msgs, jsonTag+" is "+fieldErr.Tag())
 				}
 			}

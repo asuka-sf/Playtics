@@ -11,7 +11,7 @@ import (
 )
 
 type createMatchRequest struct {
-	DurationSeconds int `json:"duration_seconds" binding:"required"`
+	DurationSeconds int `json:"duration_seconds" binding:"required,min=1"`
 }
 
 type matchResponse struct {
@@ -50,5 +50,4 @@ func (h *matchHandler) Create(c *gin.Context) {
 		DurationSeconds: result.DurationSeconds,
 		CreatedAt:       result.CreatedAt,
 	})
-
 }

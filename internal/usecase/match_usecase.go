@@ -23,7 +23,6 @@ func NewMatchUsecase(repo repository.MatchRepository) *matchUsecase {
 	}
 }
 
-// create match
 func (u *matchUsecase) Create(ctx context.Context, durationSeconds int) (*domain.Match, error) {
 	match, err := u.repo.Create(ctx, &domain.Match{
 		ID:              uuid.New(),
