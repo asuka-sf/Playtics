@@ -14,15 +14,18 @@ type Registry struct {
 func NewRegistry(queries *gen.Queries) *Registry {
 
 	playerRepo := repository.NewPlayerRepository(queries)
+	matchRepo := repository.NewMatchRepository(queries)
 
 	// usecase
 	playerUsecase := usecase.NewPlayerUsecase(playerRepo)
+	matchUsecase := usecase.NewMatchUsecase(matchRepo)
 
 	// handler
 	playerHandler := handler.NewPlayerHandler(playerUsecase)
+	matchHandler := handler.NewMatchHandler(matchUsecase)
 
 	// appHandler
-	appHandler := handler.NewHandler(playerHandler)
+	appHandler := handler.NewHandler(playerHandler, matchHandler)
 
 	return &Registry{
 		AppHandler: appHandler,
