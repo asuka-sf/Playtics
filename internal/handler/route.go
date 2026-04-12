@@ -11,4 +11,7 @@ func (h *Handler) RegisterRoutes(r *gin.Engine) {
 
 	// match
 	r.POST("/matches", h.matchHandler.Create)
+
+	// match result
+	r.POST("/matches/:id/results", h.matchResultHandler.Create)
 }

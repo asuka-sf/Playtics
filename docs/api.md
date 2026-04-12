@@ -104,7 +104,7 @@ All endpoints return the following format on error:
 ```json
 {
     "success": "OK",
-    "message": "Created result successfully",
+    "message": "Created match result successfully",
     "data": {
         "player_id": "uuid",
         "match_id": "uuid",
@@ -116,6 +116,15 @@ All endpoints return the following format on error:
     }
 }
 ```
+
+**Error Responses**
+
+| Status Code | Message |
+|-------------|---------|
+| 400 | invalid match id |
+| 400 | player_id is required |
+| 404 | player or match not found |
+| 500 | internal server error |
 
 ### GET /players/{id}
 
