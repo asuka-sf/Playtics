@@ -2,7 +2,7 @@ package usecase
 
 import (
 	"context"
-	"errors"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -11,7 +11,7 @@ import (
 )
 
 type MatchResultUsecase interface {
-	Create(ctx context.Context, playerId, matchId uuid.UUID, killCount, deathCount, score int) (*domain.MatchResult, error)
+	Create(ctx context.Context, playerID, matchID uuid.UUID, killCount, deathCount, score int) (*domain.MatchResult, error)
 }
 
 type matchResultUsecase struct {
@@ -24,21 +24,21 @@ func NewMatchResultUsecase(repo repository.MatchResultRepository) *matchResultUs
 	}
 }
 
-func (u *matchResultUsecase) Create(ctx context.Context, playerId, matchId uuid.UUID, killCount, deathCount, score int) (*domain.MatchResult, error) {
+func (u *matchResultUsecase) Create(ctx context.Context, playerID, matchID uuid.UUID, killCount, deathCount, score int) (*domain.MatchResult, error) {
 	// validation check
 	if killCount < 0 {
-		return nil, errors.New("kill_count must be 0 or greater")
+		return nil, fmt.Errorf("kill_count must be 0 or greater: %w", domain.ErrValidation)
 	}
 	if deathCount < 0 {
-		return nil, errors.New("death_count must be 0 or greater")
+		return nil, fmt.Errorf("death_count must be 0 or greater: %w", domain.ErrValidation)
 	}
 	if score < 0 {
-		return nil, errors.New("score must be 0 or greater")
+		return nil, fmt.Errorf("score must be 0 or greater: %w", domain.ErrValidation)
 	}
 
 	matchResult, err := u.repo.Create(ctx, &domain.MatchResult{
-		PlayerID:   playerId,
-		MatchID:    matchId,
+		PlayerID:   playerID,
+		MatchID:    matchID,
 		KillCount:  killCount,
 		DeathCount: deathCount,
 		Score:      score,

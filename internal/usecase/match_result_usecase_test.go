@@ -31,11 +31,12 @@ func (m *MockMatchResultRepository) Create(ctx context.Context, matchResult *dom
 
 func TestMatchResultCreate(t *testing.T) {
 	tests := []struct {
-		name    string
-		args    *domain.MatchResult
-		result  *domain.MatchResult
-		mockErr error
-		wantErr bool
+		name      string
+		args      *domain.MatchResult
+		result    *domain.MatchResult
+		mockErr   error
+		wantErr   bool
+		wantErrIs error
 	}{
 		{
 			name:    "success",
@@ -60,8 +61,9 @@ func TestMatchResultCreate(t *testing.T) {
 				Score:      10000,
 				CreatedAt:  time.Date(2026, 3, 30, 10, 0, 0, 0, time.UTC),
 			},
-			mockErr: nil,
-			wantErr: true,
+			mockErr:   nil,
+			wantErr:   true,
+			wantErrIs: domain.ErrValidation,
 		},
 		{
 			name:    "failed to create match result",
@@ -86,6 +88,9 @@ func TestMatchResultCreate(t *testing.T) {
 			if tt.wantErr {
 				assert.Error(t, err)
 				assert.Nil(t, matchResult)
+				if tt.wantErrIs != nil {
+					assert.ErrorIs(t, err, tt.wantErrIs)
+				}
 			} else {
 				assert.NoError(t, err)
 				assert.Equal(t, tt.result, matchResult)

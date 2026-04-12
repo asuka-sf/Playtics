@@ -123,6 +123,11 @@ All endpoints return the following format on error:
 |-------------|---------|
 | 400 | invalid match id |
 | 400 | player_id is required |
+| 400 | invalid player id |
+| 400 | kill_count must be 0 or greater |
+| 400 | death_count must be 0 or greater |
+| 400 | score must be 0 or greater |
+| 400 | invalid request body |
 | 404 | player or match not found |
 | 500 | internal server error |
 
