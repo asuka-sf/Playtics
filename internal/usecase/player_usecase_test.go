@@ -25,7 +25,7 @@ func (m *MockPlayerRepository) FindByID(ctx context.Context, id uuid.UUID) (*dom
 	return m.player, m.err
 }
 
-var playerResult = &domain.Player{
+var wantPlayer = &domain.Player{
 	ID:        uuid.MustParse("550e8400-e29b-41d4-a716-446655440000"),
 	Name:      "Alice",
 	Email:     "alice@email.com",
@@ -48,7 +48,7 @@ func TestCreatePlayer(t *testing.T) {
 				Email:    "alice@email.com",
 				ImageURL: "test_image.jpg",
 			},
-			result: playerResult,
+			result: wantPlayer,
 			err:    nil,
 		},
 		{
@@ -58,7 +58,7 @@ func TestCreatePlayer(t *testing.T) {
 				Email:    "alice@email.com",
 				ImageURL: "",
 			},
-			result: playerResult,
+			result: wantPlayer,
 			err:    nil,
 		},
 		{
@@ -102,7 +102,7 @@ func TestGetPlayer(t *testing.T) {
 	}{
 		{
 			name:   "success",
-			result: playerResult,
+			result: wantPlayer,
 			err:    nil,
 		},
 		{
