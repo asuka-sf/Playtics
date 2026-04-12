@@ -15,17 +15,20 @@ func NewRegistry(queries *gen.Queries) *Registry {
 
 	playerRepo := repository.NewPlayerRepository(queries)
 	matchRepo := repository.NewMatchRepository(queries)
+	matchResultRepo := repository.NewMatchResultRepository(queries)
 
 	// usecase
 	playerUsecase := usecase.NewPlayerUsecase(playerRepo)
 	matchUsecase := usecase.NewMatchUsecase(matchRepo)
+	matchResultUsecase := usecase.NewMatchResultUsecase(matchResultRepo)
 
 	// handler
 	playerHandler := handler.NewPlayerHandler(playerUsecase)
 	matchHandler := handler.NewMatchHandler(matchUsecase)
+	matchResultHandler := handler.NewMatchResultHandler(matchResultUsecase)
 
 	// appHandler
-	appHandler := handler.NewHandler(playerHandler, matchHandler)
+	appHandler := handler.NewHandler(playerHandler, matchHandler, matchResultHandler)
 
 	return &Registry{
 		AppHandler: appHandler,
